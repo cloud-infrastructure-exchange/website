@@ -13,6 +13,7 @@
       overflow: hidden;
       background-color: #000;
     }
+
     img {
       position: absolute;
       top: 0;
@@ -20,11 +21,24 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: center top; /* keeps upper portion visible on mobile */
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    img.loaded {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <img src="image.jpg" alt="Full screen image">
+  <img src="cix.png" alt="Full screen image" id="fullscreen-image">
+  
+  <script>
+    const img = document.getElementById('fullscreen-image');
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+  </script>
 </body>
 </html>
