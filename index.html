@@ -21,24 +21,41 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top; /* keeps upper portion visible on mobile */
+      object-position: center top;
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
     }
 
-    img.loaded {
+    img.visible {
       opacity: 1;
     }
   </style>
 </head>
 <body>
-  <img src="cix.png" alt="Full screen image" id="fullscreen-image">
-  
+  <img src="landing.png" alt="Image 1" id="img1">
+  <img src="landingtwo.png" alt="Image 2" id="img2">
+
   <script>
-    const img = document.getElementById('fullscreen-image');
-    img.addEventListener('load', () => {
-      img.classList.add('loaded');
+    const img1 = document.getElementById('img1');
+    const img2 = document.getElementById('img2');
+
+    // once image1 loads, fade it in
+    img1.addEventListener('load', () => {
+      img1.classList.add('visible');
+
+      // after 3s (1.5 fade in + 1.5 hold), fade in image2 and fade out image1
+      setTimeout(() => {
+        img2.classList.add('visible');
+        img1.classList.remove('visible');
+      }, 3000);
     });
+
+    // preload image2 before we try to fade it in
+    img2.addEventListener('load', () => {});
+
+    // trigger load sequence if cached
+    if (img1.complete) img1.dispatchEvent(new Event('load'));
+    if (img2.complete) img2.dispatchEvent(new Event('load'));
   </script>
 </body>
 </html>
